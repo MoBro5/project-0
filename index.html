@@ -1,0 +1,160 @@
+<html>
+  <head>
+    <title>Learning Web Development</title>
+    <style>
+      .main {
+        margin: 0;
+        width:100%;
+      }
+      .box {
+        width: 100%;
+        height: 99%;
+        border: 1px solid black;
+        margin:0;
+      }
+   
+      #car {
+        width: 40px;
+        height: 20px;
+        border: 1px solid rgb(0, 0, 0);
+        background-color: rgb(177, 243, 177);
+        position: relative;
+        top: 1px;
+      }
+    
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="box">
+        <div id="car">
+
+        </div>
+      </div>
+    </div>
+    <script>3
+      function setWidth(width = 300) {
+        document.querySelector(".box").style.width = width + 'px';
+      }
+
+      const rotateDuration = 20;
+      let direction = 'right';
+      let rotateCount = 0;
+      let rotate = false;
+
+      function drive() {
+        const car = document.querySelector("#car");
+        const left = parseInt(car.style.left||0);
+        const top = parseInt(car.style.top||0);
+
+        if (direction === 'down' && rotateCount % rotateDuration === 0) {
+          if (left + 40 >= 300) {
+            direction = 'left';
+          } else if (left <= 1) {
+            direction = 'right';
+          }
+        } else {
+          if (left + 40 >= 300) {
+            direction = 'down';
+          } else if (left < 0) {
+            direction = 'down';
+
+          }
+        }
+        switch (direction) {
+          case 'right':
+            car.style.width = '40px';
+            car.style.height = '20px';
+            car.style.left = left + 1 + 'px';
+            break;
+          case 'left':
+            car.style.width = '40px';
+            car.style.height = '20px';
+            car.style.left = left - 1 + 'px';
+            break;
+          case 'down':
+            car.style.width = '20px';
+            car.style.height = '40px';
+            car.style.top = top + 1 + 'px';
+            rotateCount++;
+          break;
+          default:
+            car.style.width = '40px';
+            car.style.height = '20px';
+        }
+      }
+
+      function runLoop() {
+        /*
+        let randomWidth = Math.floor(Math.random() * (300) + 300);
+
+        console.info(randomWidth)
+        setWidth(randomWidth);
+        */
+        drive();
+        setTimeout(runLoop, 10);
+      }
+
+      //runLoop();
+      let acceleration = 1;
+      document.addEventListener('keydown', function(e) {
+        const car = document.querySelector("#car");
+        const box = document.querySelector('.box');
+        const left = parseInt(car.style.left||0);
+        const top = parseInt(car.style.top||0);
+        if (e.key === 'ArrowRight') {
+            car.style.width = '40px';
+            car.style.height = '20px';
+            car.style.left = left + acceleration + 'px';
+
+            if (left === box.offsetHeight - box.offsetTop - parseInt(car.style.height) + 4) {
+              car.style.left = 0;
+            } else if (left + acceleration + parseInt(car.style.height) > box.offsetHeight - box.offsetTop) {
+              car.style.left = box.offsetHeight - box.offsetTop - parseInt(car.style.height) + 4;
+            }
+        }
+        if (e.key === 'ArrowLeft') {
+            car.style.width = '40px';
+            car.style.height = '20px';
+            car.style.left = left + acceleration + 'px';
+            
+            if (left === box.offsetHeight - box.offsetTop - parseInt(car.style.height) + 4) {
+              car.style.left = 0;
+            } else if (left + acceleration + parseInt(car.style.height) > box.offsetHeight - box.offsetTop) {
+              car.style.right = box.offsetHeight - box.offsetTop - parseInt(car.style.height) + 4;
+            }
+        }
+        if (e.key === 'ArrowDown') {
+            car.style.width = '20px';
+            car.style.height = '40px';
+            car.style.top = top + acceleration + 'px';
+            rotateCount++;
+
+            if (top === box.offsetHeight - box.offsetTop - parseInt(car.style.height) + 4) {
+              car.style.top = 0;
+            } else if (top + acceleration + parseInt(car.style.height) > box.offsetHeight - box.offsetTop) {
+              car.style.top = box.offsetHeight - box.offsetTop - parseInt(car.style.height) + 4;
+            }
+        }
+        if (e.key === 'ArrowUp') {
+            car.style.width = '20px';
+            car.style.height = '40px';
+            car.style.top = top - acceleration + 'px';
+            rotateCount++;
+
+            if (top === box.offsettop + box.offsetHeight  - parseInt(car.style.height) + 4) {
+              car.style.top = 0;
+            } else if (top + acceleration + parseInt(car.style.height) > box.offsetHeight - box.offsetTop) {
+              car.style.top = box.offsetHeight - box.offsetTop - parseInt(car.style.height) + 4;
+            }
+
+
+        }
+        acceleration++;
+      });
+      document.addEventListener('keyup', function(e) {
+        acceleration = 0;
+      });
+    </script>
+  </body>
+</html>
