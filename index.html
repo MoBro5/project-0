@@ -106,7 +106,18 @@
             car.style.width = '40px';
             car.style.height = '20px';
             car.style.left = left + acceleration + 'px';
+ /*if (left === box.offsetHeight - box.offsetTop - parseInt(car.style.height) + 4) {
+ 
+              car.style.left = 0;
+ 
+            } else if (left + acceleration + parseInt(car.style.height) > box.offsetHeight - box.offsetTop) {
+ 
+              car.style.left = box.offsetHeight - box.offsetTop - parseInt(car.style.height) + 4;
+ 
+            }*/
+ 
 
+ 
             if (left === box.offsetHeight - box.offsetTop - parseInt(car.style.height) + 4) {
               car.style.left = 0;
             } else if (left + acceleration + parseInt(car.style.height) > box.offsetHeight - box.offsetTop) {
